@@ -1,0 +1,13 @@
+{
+    "name": "htf",
+    "version": "1.0.0",
+    "description": "PetPlace is an online platform designed to connect pet owners who are looking to put their pets up for adoption with users who are interested in adopting them.",
+    "scripts": {
+        "install": "cd Frontend && npm install && cd .. && cd Backend && npm install",
+        "server": "cd Backend && nodemon index.js",
+        "client": "cd Frontend && npm run dev"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

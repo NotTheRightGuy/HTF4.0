@@ -20,17 +20,31 @@ Whether you're a pet owner looking to find a loving home for your pet or a user 
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/PetPlace.git`
-2. Install the required dependencies: `npm install`
-3. Start the application: `npm start`
+Clone the repository: `git clone https://github.com/NotTheRightGuy/HTF4.0`
 
-## Usage
+Install `nodemon` as a global package
 
-1. Open the application in your web browser.
-2. Sign up or log in to your account.
-3. Browse through the available pets or search for specific criteria.
-4. View pet profiles and contact pet owners for more information.
-5. Follow the adoption process as guided by the website.
+```bash
+npm install -g nodemon
+```
+
+Run the following command to install the required packages:
+
+```bash
+npm run install
+```
+
+Run the development backend first using the command
+
+```bash
+npm run server
+```
+
+Then run the development frontend using the command
+
+```bash
+npm run client
+```
 
 ## Contributing
 
