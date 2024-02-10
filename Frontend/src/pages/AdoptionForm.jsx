@@ -4,15 +4,27 @@ import { MdOutlinePets } from "react-icons/md";
 import { GoNumber } from "react-icons/go";
 import axios from "axios";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
+import { useState, useRef, useEffect } from "react";
+import { useUser } from "@clerk/clerk-react";
 
-import { useRef } from "react";
-import { useState } from "react";
+function Spinner() {
+    return (
+        <div
+            style={{
+                width: "16px",
+                height: "16px",
+                border: "2px solid #ccc",
+                borderRadius: "50%",
+                borderTopColor: "#000",
+                animation: "spin 1s infinite linear",
+            }}
+        ></div>
+    );
+}
 
 export default function AdoptionForm() {
     const imageRef = useRef();
-    const db_url = "";
-    const uploadPreset = "fdjmv1o0";
-    const cloud_name = "ddtz2tmd9";
+    const db_url = "http://localhost:3000/adoption";
 
     const nameRef = useRef();
     const ageRef = useRef();
@@ -21,8 +33,11 @@ export default function AdoptionForm() {
     const reasonRef = useRef();
 
     const [imageUrl, setImageUrl] = useState("");
+    const [imageUploading, setImageUploading] = useState(false);
+    const [documentUploading, setDocumentUploading] = useState(false);
 
     async function uploadImage() {
+        setImageUploading(true);
         console.log("Upload Image");
         const formData = new FormData();
         formData.append("file", imageRef.current.files[0]);
@@ -37,10 +52,47 @@ export default function AdoptionForm() {
             setImageUrl(response.data.secure_url);
         } catch (error) {
             console.error("Error uploading image:", error);
+        } finally {
+            setImageUploading(false);
         }
     }
 
-    function uploadToDatabase() {}
+    const { user } = useUser();
+    function uploadToDatabase() {
+        setDocumentUploading(true);
+        const { fullName, primaryPhoneNumber, primaryEmailAddress } = user;
+        const parentName = fullName;
+        const parentPhone = primaryPhoneNumber.phoneNumber;
+        const parentEmail = primaryEmailAddress.emailAddress;
+        const name = nameRef.current.value;
+        const age = ageRef.current.value;
+        const species = speciesRef.current.value;
+        const description = descriptionRef.current.value;
+        const reason = reasonRef.current.value;
+
+        const data = {
+            parentName,
+            parentPhone,
+            parentEmail,
+            name,
+            age,
+            species,
+            description,
+            reason,
+            imageUrl,
+        };
+
+        axios
+            .post(db_url, data)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.error("Error uploading to database:", error);
+            });
+
+        setDocumentUploading(false);
+    }
 
     return (
         <div className="flex h-screen justify-center items-center">
@@ -125,10 +177,11 @@ export default function AdoptionForm() {
                 <br />
 
                 <Button color="gray" onClick={uploadImage}>
-                    <ArrowTopRightIcon width="16" height="16" /> Upload Image
+                    <ArrowTopRightIcon width="16" height="16" />
+                    {imageUploading ? <Spinner /> : "Upload Image"}
                 </Button>
-                <Button onClick={uploadImage} className="ml-2">
-                    Submit
+                <Button onClick={uploadToDatabase} className="ml-2">
+                    {documentUploading ? <Spinner /> : "Submit"}
                 </Button>
             </Card>
             <div className="h-[450px] w-[450px] bg-slate-50 border-black border-dotted border-4 absolute right-[150px] top-1/2] flex justify-center items-center text-center text-sm p-10">
