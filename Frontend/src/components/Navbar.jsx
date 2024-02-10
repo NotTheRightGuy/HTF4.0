@@ -1,6 +1,7 @@
 import Logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { SignedOut, SignedIn } from "@clerk/clerk-react";
+import { SignOutButton } from "@clerk/clerk-react";
 export default function Navbar() {
     const navigate = useNavigate();
     return (
@@ -31,6 +32,7 @@ export default function Navbar() {
                     >
                         Dashboard
                     </div>
+                    <SignOutButton />
                 </SignedIn>
             </div>
         </div>
