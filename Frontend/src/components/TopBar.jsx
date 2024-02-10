@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function TopBar() {
     const navigate = useNavigate();
     return (
-        <nav className="h-16 w-full border-b-[1px] flex items-center p-4 justify-between">
+        <nav className="h-16 w-full border-b-[1px] flex items-center p-4 justify-between top-0 z-10">
             <div className="w-1/2">
                 <TextField.Root>
                     <TextField.Slot>

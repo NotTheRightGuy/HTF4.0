@@ -4,7 +4,7 @@ const AdoptionSchema = mongoose.Schema({
     name: String,
     age: Number,
     species: String,
-    description: String,
+    breed: "String",
     reason: String,
     imageUrl: String,
     parentName: String,

@@ -36,7 +36,7 @@ export default function AdoptionForm() {
     const nameRef = useRef();
     const ageRef = useRef();
     const speciesRef = useRef();
-    const descriptionRef = useRef();
+    const breedRef = useRef();
     const reasonRef = useRef();
 
     const [imageUrl, setImageUrl] = useState("");
@@ -76,7 +76,7 @@ export default function AdoptionForm() {
         const name = nameRef.current.value;
         const age = ageRef.current.value;
         const species = speciesRef.current.value;
-        const description = descriptionRef.current.value;
+        const breed = breedRef.current.value;
         const reason = reasonRef.current.value;
 
         const data = {
@@ -86,7 +86,7 @@ export default function AdoptionForm() {
             name,
             age,
             species,
-            description,
+            breed,
             reason,
             imageUrl,
         };
@@ -164,10 +164,15 @@ export default function AdoptionForm() {
                                 ref={speciesRef}
                             />
                         </TextField.Root>
-                        <div className="text-sm font-poppins mt-5 mb-2">
-                            Give a brief description
-                        </div>
-                        <TextArea className="w-2/3" ref={descriptionRef} />
+                        <TextField.Root className="w-2/3">
+                            <TextField.Slot>
+                                <SiReasonstudios height="16" width="16" />
+                            </TextField.Slot>
+                            <TextField.Input
+                                placeholder="What breed is your pet"
+                                ref={breedRef}
+                            />
+                        </TextField.Root>
                     </section>
                     <div className="text-sm font-poppins mt-5 mb-2">
                         Reason to put for Adoption
