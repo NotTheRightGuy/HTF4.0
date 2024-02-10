@@ -4,6 +4,7 @@ import Landing from "./pages/Landing";
 import LogIn from "./pages/LogIn";
 import UserProfilePage from "./pages/UserProfile";
 import Dashboard from "./pages/Dashboard";
+import AdoptionForm from "./pages/AdoptionForm";
 function App() {
     return (
         <>
@@ -17,6 +18,7 @@ function App() {
                         element={<Dashboard />}
                     ></Route>
                     <Route path="/user/profile" element={<UserProfilePage />} />
+                    <Route path="/pet/adoption" element={<AdoptionForm />} />
                 </Routes>
             </BrowserRouter>
         </>
