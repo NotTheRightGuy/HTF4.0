@@ -1,21 +1,50 @@
-import { Card, TextField, TextArea } from "@radix-ui/themes";
+import { Card, TextField, TextArea, Button } from "@radix-ui/themes";
 import { SiReasonstudios } from "react-icons/si";
 import { MdOutlinePets } from "react-icons/md";
 import { GoNumber } from "react-icons/go";
+import axios from "axios";
+import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 
 import { useRef } from "react";
+import { useState } from "react";
 
 export default function AdoptionForm() {
     const imageRef = useRef();
     const db_url = "";
+    const uploadPreset = "fdjmv1o0";
+    const cloud_name = "ddtz2tmd9";
 
-    function uploadImage() {}
+    const nameRef = useRef();
+    const ageRef = useRef();
+    const speciesRef = useRef();
+    const descriptionRef = useRef();
+    const reasonRef = useRef();
+
+    const [imageUrl, setImageUrl] = useState("");
+
+    async function uploadImage() {
+        console.log("Upload Image");
+        const formData = new FormData();
+        formData.append("file", imageRef.current.files[0]);
+        formData.append("upload_preset", "fdjmv1o0"); // Replace "your_upload_preset_here" with your Cloudinary upload preset
+
+        try {
+            const response = await axios.post(
+                "https://api.cloudinary.com/v1_1/ddtz2tmd9/image/upload",
+                formData
+            );
+            console.log(response.data.secure_url);
+            setImageUrl(response.data.secure_url);
+        } catch (error) {
+            console.error("Error uploading image:", error);
+        }
+    }
 
     function uploadToDatabase() {}
 
     return (
         <div className="flex h-screen justify-center items-center">
-            <Card className=" h-[90vh] w-[90vw] p-4 bg-slate-100 grid grid-cols-2">
+            <Card className=" h-[90vh] w-[90vw] p-4 bg-slate-100 grid grid-cols-2 relative">
                 <div>
                     <section>
                         <h1 className="text-3xl font-protest opacity-90">
@@ -36,7 +65,10 @@ export default function AdoptionForm() {
                             <TextField.Slot>
                                 <MdOutlinePets height="16" width="16" />
                             </TextField.Slot>
-                            <TextField.Input placeholder="People would love to know what you call him" />
+                            <TextField.Input
+                                placeholder="People would love to know what you call him"
+                                ref={nameRef}
+                            />
                         </TextField.Root>
                         <div className="text-sm font-poppins mt-5 mb-2">
                             Age
@@ -45,7 +77,10 @@ export default function AdoptionForm() {
                             <TextField.Slot>
                                 <GoNumber height="16" width="16" />
                             </TextField.Slot>
-                            <TextField.Input placeholder="How young is your kiddo?" />
+                            <TextField.Input
+                                placeholder="How young is your kiddo?"
+                                ref={ageRef}
+                            />
                         </TextField.Root>
                         <div className="text-sm font-poppins mt-5 mb-2">
                             Species
@@ -54,12 +89,15 @@ export default function AdoptionForm() {
                             <TextField.Slot>
                                 <GoNumber height="16" width="16" />
                             </TextField.Slot>
-                            <TextField.Input placeholder="Is it Dog? Is it a Cat? No it's a unicorn" />
+                            <TextField.Input
+                                placeholder="Is it Dog? Is it a Cat? No it's a unicorn"
+                                ref={speciesRef}
+                            />
                         </TextField.Root>
                         <div className="text-sm font-poppins mt-5 mb-2">
                             Give a brief description
                         </div>
-                        <TextArea className="w-2/3" />
+                        <TextArea className="w-2/3" ref={descriptionRef} />
                     </section>
                     <div className="text-sm font-poppins mt-5 mb-2">
                         Reason to put for Adoption
@@ -68,7 +106,10 @@ export default function AdoptionForm() {
                         <TextField.Slot>
                             <SiReasonstudios height="16" width="16" />
                         </TextField.Slot>
-                        <TextField.Input placeholder="Don't worry we won't judge" />
+                        <TextField.Input
+                            placeholder="Don't worry we won't judge"
+                            ref={reasonRef}
+                        />
                     </TextField.Root>
 
                     <div className="text-sm font-poppins mt-5 mb-2">
@@ -81,7 +122,30 @@ export default function AdoptionForm() {
                         ref={imageRef}
                     />
                 </div>
+                <br />
+
+                <Button color="gray" onClick={uploadImage}>
+                    <ArrowTopRightIcon width="16" height="16" /> Upload Image
+                </Button>
+                <Button onClick={uploadImage} className="ml-2">
+                    Submit
+                </Button>
             </Card>
+            <div className="h-[450px] w-[450px] bg-slate-50 border-black border-dotted border-4 absolute right-[150px] top-1/2] flex justify-center items-center text-center text-sm p-10">
+                {imageUrl.length == 0 ? (
+                    <>
+                        Your Pet Picture will be shown here once uploaded.
+                        Please make sure to hit submit button after the image
+                        has been uploaded
+                    </>
+                ) : (
+                    <img
+                        src={imageUrl}
+                        alt="PetImage"
+                        className=" h-full w-full"
+                    />
+                )}
+            </div>
         </div>
     );
 }

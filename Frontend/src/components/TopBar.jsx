@@ -22,11 +22,6 @@ export default function TopBar() {
                 </TextField.Root>
             </div>
             <div className="flex gap-4">
-                <Tooltip content="Notifications">
-                    <IconButton variant="outline" color="gray">
-                        <BellIcon />
-                    </IconButton>
-                </Tooltip>
                 <Tooltip content="Vet.AI">
                     <IconButton variant="outline" color="gray">
                         <RocketIcon />
