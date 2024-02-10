@@ -23,7 +23,13 @@ export default function TopBar() {
             </div>
             <div className="flex gap-4">
                 <Tooltip content="Vet.AI">
-                    <IconButton variant="outline" color="gray">
+                    <IconButton
+                        variant="outline"
+                        color="gray"
+                        onClick={() => {
+                            navigate("/chat");
+                        }}
+                    >
                         <RocketIcon />
                     </IconButton>
                 </Tooltip>

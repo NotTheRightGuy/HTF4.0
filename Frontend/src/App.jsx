@@ -5,6 +5,7 @@ import LogIn from "./pages/LogIn";
 import UserProfilePage from "./pages/UserProfile";
 import Dashboard from "./pages/Dashboard";
 import AdoptionForm from "./pages/AdoptionForm";
+import ChatBot from "./pages/ChatBot";
 function App() {
     return (
         <>
@@ -19,6 +20,7 @@ function App() {
                     ></Route>
                     <Route path="/user/profile" element={<UserProfilePage />} />
                     <Route path="/pet/adoption" element={<AdoptionForm />} />
+                    <Route path="/chat" element={<ChatBot />} />
                 </Routes>
             </BrowserRouter>
         </>

@@ -7,6 +7,11 @@ import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { useState, useRef, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { useNavigate } from "react-router-dom";
+
 function Spinner() {
     return (
         <div
@@ -23,6 +28,8 @@ function Spinner() {
 }
 
 export default function AdoptionForm() {
+    const navigate = useNavigate();
+
     const imageRef = useRef();
     const db_url = "http://localhost:3000/adoption";
 
@@ -50,8 +57,10 @@ export default function AdoptionForm() {
             );
             console.log(response.data.secure_url);
             setImageUrl(response.data.secure_url);
+            toast.success("Image uploaded successfully");
         } catch (error) {
             console.error("Error uploading image:", error);
+            toast.error("Error uploading image");
         } finally {
             setImageUploading(false);
         }
@@ -85,9 +94,17 @@ export default function AdoptionForm() {
         axios
             .post(db_url, data)
             .then((response) => {
+                toast.success(
+                    "Document uploaded successfully, Redirecting to dashboard"
+                );
+                setTimeout(() => {
+                    navigate("/user/dashboard");
+                }, 2000);
+
                 console.log(response);
             })
             .catch((error) => {
+                toast.error("Error uploading to database");
                 console.error("Error uploading to database:", error);
             });
 
@@ -96,6 +113,7 @@ export default function AdoptionForm() {
 
     return (
         <div className="flex h-screen justify-center items-center">
+            <ToastContainer />
             <Card className=" h-[90vh] w-[90vw] p-4 bg-slate-100 grid grid-cols-2 relative">
                 <div>
                     <section>
