@@ -8,7 +8,14 @@ export default function Navbar() {
         <div className="w-screen h-16 flex items-center px-10 justify-between border-b-[1px] shadow-sm">
             <div className="text-xl opacity-90 flex flex-4 items-center">
                 <img src={Logo} alt="Logo" className="h-16 " />
-                <div className="font-protest">PetPlace</div>
+                <div
+                    className="font-protest"
+                    onClick={() => {
+                        navigate("/");
+                    }}
+                >
+                    PetPlace
+                </div>
             </div>
             <div className="flex gap-6 font-roboto font-bold opacity-80">
                 <div className="cursor-pointer">Pets</div>
